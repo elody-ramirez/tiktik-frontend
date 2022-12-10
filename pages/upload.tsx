@@ -25,7 +25,7 @@ const Upload = () => {
     const selectedFile = e.target.files[0]
     const fileTypes = ['video/mp4', 'video/webm', 'video/ogg']
 
-    if(fileTypes.includes(selectedFile.type)) {
+    if (fileTypes.includes(selectedFile.type)) {
       client.assets.upload('file', selectedFile, {
         contentType: selectedFile.type,
         filename: selectedFile.name
@@ -44,17 +44,14 @@ const Upload = () => {
     if(caption && videoAsset?._id && category) {
       setSavingPost(true)
 
-      console.log('this is video asset')
-      console.log(videoAsset)
-
-      const document = {
+      const doc = {
         _type: 'post',
         caption,
         video: {
           _type: 'file',
           asset: {
             _type: 'reference',
-            ref: videoAsset?._id
+            _ref: videoAsset?._id
           },
         },
         userId: userProfile?._id,
@@ -65,7 +62,7 @@ const Upload = () => {
         topic: category
       }
 
-      await axios.post(`${BASE_URL}api/post`, document)
+      await axios.post(`${BASE_URL}/api/post`, doc)
 
       router.push('/')
     }
